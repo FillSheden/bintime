@@ -66,9 +66,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'house',
                         'flat',
                         [
-                            'label' => 'Balance',
+                            'label' => '',
                             'value' => function ($model) {
                                 return "<a class='btn btn-warning' href='".Url::to(['addresses/update', 'id' => $model->id])."'>Edit</a>";
+                            },
+                            'format' => 'html'
+                        ],
+                        [
+                            'label' => '',
+                            'value' => function ($model) {
+                                return "<a class='btn btn-danger' href='".Url::to(['addresses/delete', 'id' => $model->id])."'>Delete</a>";
                             },
                             'format' => 'html'
                         ],
