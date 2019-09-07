@@ -77,6 +77,11 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionCustomerList()
+    {
+        return $this->render('customer-list');
+    }
+
     /**
      * Logs in a user.
      *

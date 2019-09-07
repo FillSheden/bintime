@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -32,10 +33,12 @@ class Customer extends ActiveRecord
     public function rules()
     {
         return [
-            [['login', 'password'], 'required'],
+            [['login', 'email'], 'unique'],
+            ['login', 'string', 'length' => [4, 255]],
+            ['password', 'string', 'length' => [6, 255]],
+            [['login', 'password', 'sex', 'first_name', 'last_name', 'email'], 'required'],
             [['sex'], 'string'],
-            [['created'], 'safe'],
-            [['login', 'password', 'first_name', 'last_name', 'email'], 'string', 'max' => 255],
+            [['first_name', 'last_name', 'email'], 'string', 'max' => 255],
         ];
     }
 
@@ -54,5 +57,15 @@ class Customer extends ActiveRecord
             'created' => 'Created',
             'email' => 'Email',
         ];
+    }
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        $this->created = Yii::$app->formatter->asTimestamp(date('Y-m-d h:i:s'));
+        return parent::beforeSave($insert);
     }
 }
